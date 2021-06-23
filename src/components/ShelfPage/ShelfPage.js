@@ -6,6 +6,7 @@ function ShelfPage() {
   const [description, setDescription] = useState('')
   const [image_url, setImage_Url] = useState('')
 
+  // handling change for input values
   const handleDescChange = (event) => {
     setDescription(event.target.value)
   }
@@ -16,6 +17,8 @@ function ShelfPage() {
   const handleSubmit = (event) => {
     event.preventDefault
     console.log('adding item');
+
+    // dispatch sent to item.saga, payload as below
     dispatch({
       type:'ADD_ITEM',
         payload: {
@@ -23,6 +26,8 @@ function ShelfPage() {
           image_url: image_url,
         }
       })
+
+      // clearing inputs
     setDescription('')
     setImage_Url('')
     }

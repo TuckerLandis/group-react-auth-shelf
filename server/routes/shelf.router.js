@@ -13,6 +13,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 /**
  * Add an item for the logged in user to the shelf
  */
+
+// adds item to shelf with description and image url. attaches id of user who added
 router.post('/', rejectUnauthenticated, (req, res) => {
   // endpoint functionality
   query = `INSERT INTO "item" ("description", "image_url", "user_id")

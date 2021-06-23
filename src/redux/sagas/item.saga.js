@@ -13,7 +13,7 @@ export function* fetchItems() {
   }
 }
 
-// Saga to start on "ADD_ITEM"
+// Saga Worker to start on "ADD_ITEM"
 function* addItem(action) {
   console.log('Info coming from client', action.payload);
 
@@ -29,7 +29,7 @@ function* addItem(action) {
 }
 
 
-
+// Root to listen for item dispatches
 function* itemSaga() {
     yield takeLatest('ADD_ITEM', addItem);
   }
