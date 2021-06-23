@@ -22,9 +22,9 @@ function* addItem(action) {
   console.log('Info coming from client', action.payload);
 
   try{
-    yield axios.post('/api/shelf' ,action.payload);
+    yield axios.post('/api/shelf', action.payload);
     // reset state to update from dom
-    yield put({action: "FETCH_ITEMS"});
+    yield put({type: "FETCH_ITEMS"});
   }
 
   catch (error) {
@@ -32,9 +32,22 @@ function* addItem(action) {
   }
 }
 
+function* removeItem (action) {
+    console.log('deleting item', action.payload);
+
+    try {
+        yield axios.delete(`/api/shelf/${action.payload.id}`)
+        yield put({type: 'FETCH_ITEMS'})
+    } catch(error) {
+        console.log('error deleting item', error)
+    }
+}
+
+
 export function* itemSaga() {
   yield takeEvery('FETCH_ITEMS', fetchItems);
   yield takeLatest('ADD_ITEM', addItem);
+  yield takeEvery('DELETE_ITEM', removeItem)
 }
 
 
