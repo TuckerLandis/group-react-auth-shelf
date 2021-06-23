@@ -1,12 +1,13 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-
+const {rejectUnauthenticated} = require('../modules/authentication-middleware')
 /**
  * Get all of the items on the shelf
  */
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
   res.sendStatus(200); // For testing only, can be removed
+  let queryText = `SELECT * FROM ""`
 });
 
 /**
@@ -23,6 +24,10 @@ router.delete('/:id', (req, res) => {
   // endpoint functionality
 });
 
+
+
+
+///--------STRETCH---------------
 /**
  * Update an item if it's something the logged in user added
  */
