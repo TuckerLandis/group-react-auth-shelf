@@ -1,11 +1,15 @@
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 
 // worker Saga: will be fired on "FETCH_USER" actions
 export function* fetchItems() {
   try {
       console.log('');
     //take every fetch items, call a fetch items function. 
+    const response = yield axios.get('/api/shelf')
+
+    yield put({type: 'SET_ITEMS', payload: response.data});
+
     }
 
    catch (error) {
@@ -20,7 +24,7 @@ function* addItem(action) {
   try{
     yield axios.post('/api/shelf' ,action.payload);
     // reset state to update from dom
-    // yield put({action: "FETCH_ITEM"});
+    yield put({action: "FETCH_ITEMS"});
   }
 
   catch (error) {
@@ -28,10 +32,10 @@ function* addItem(action) {
   }
 }
 
+export function* itemSaga() {
+  yield takeEvery('FETCH_ITEMS', fetchItems);
+  yield takeLatest('ADD_ITEM', addItem);
+}
 
-// Root to listen for item dispatches
-function* itemSaga() {
-    yield takeLatest('ADD_ITEM', addItem);
-  }
-  
+
   export default itemSaga;

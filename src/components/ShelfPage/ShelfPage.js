@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 function ShelfPage() {
+  const item = useSelector(store => store.item);
   const dispatch = useDispatch()
   const [description, setDescription] = useState('')
   const [image_url, setImage_Url] = useState('')
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_ITEMS' });
+  }, [])
 
   // handling change for input values
   const handleDescChange = (event) => {
@@ -43,6 +48,17 @@ function ShelfPage() {
       </form>
 
       <p>All of the available items can be seen here.</p>
+      
+      <ul>
+        {item.map (item => {
+          return (
+            <li key={item.id}>
+              {item.description}
+              <img src={item.image_url} alt={item.description} width="200px"/>
+            </li>
+          )
+        })}
+      </ul>
     </div>
   );
 }
