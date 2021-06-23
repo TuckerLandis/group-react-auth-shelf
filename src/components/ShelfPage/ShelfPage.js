@@ -37,6 +37,13 @@ function ShelfPage() {
     setImage_Url('')
     }
 
+    const handleDelete = (item) => {
+      dispatch({
+        type: 'DELETE_ITEM',
+        payload: {id: item}
+      })
+    }
+
   return (
     <div className="container">
       <h2>Shelf</h2>
@@ -55,6 +62,7 @@ function ShelfPage() {
             <li key={item.id}>
               {item.description}
               <img src={item.image_url} alt={item.description} width="200px"/>
+              <button onClick={() => handleDelete(item.id)}>Delete</button>
             </li>
           )
         })}
