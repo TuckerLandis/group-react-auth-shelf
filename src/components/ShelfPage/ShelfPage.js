@@ -23,6 +23,7 @@ function ShelfPage() {
           return (
             <li key={item.id}>
               {item.description}
+              <img src={item.image_url} alt={item.description} width="200px"/>
             </li>
           )
         })}
