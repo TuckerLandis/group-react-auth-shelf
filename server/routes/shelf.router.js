@@ -19,8 +19,20 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 /**
  * Add an item for the logged in user to the shelf
  */
-router.post('/', (req, res) => {
+
+// adds item to shelf with description and image url. attaches id of user who added
+router.post('/', rejectUnauthenticated, (req, res) => {
   // endpoint functionality
+  query = `INSERT INTO "item" ("description", "image_url", "user_id")
+            VALUES ($1, $2, $3);`;
+    pool.query(query, [req.body.description, req.body.image_url, req.user.id])
+    .then(result => {
+      res.sendStatus(201)
+    })
+    .catch(error => {
+      console.log('error', error);
+      res.sendStatus(500);
+    })
 });
 
 /**
