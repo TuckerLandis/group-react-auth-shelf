@@ -13,6 +13,25 @@ export function* fetchItems() {
   }
 }
 
+// Saga to start on "ADD_ITEM"
+function* addItem(action) {
+  console.log('Info coming from client', action.payload);
+
+  try{
+    yield axios.post('/api/shelf' ,action.payload);
+    // reset state to update from dom
+    // yield put({action: "FETCH_ITEM"});
+  }
+
+  catch (error) {
+    console.log('User POST request failed', error);
+  }
+}
 
 
-// export default itemSaga;
+
+function* itemSaga() {
+    yield takeLatest('ADD_ITEM', addItem);
+  }
+  
+  export default itemSaga;
